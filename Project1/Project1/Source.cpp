@@ -35,7 +35,8 @@ int main() {
 			}
 		}
 	} while (state);
-	printf("You Loose!");
+	printf("You Loose!\n");
 	freeNode(head);
+	system("PAUSE");
 	return 0;
 }
