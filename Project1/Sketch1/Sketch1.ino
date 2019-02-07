@@ -5,7 +5,7 @@ int bLedPin = 4;
 int wLedPin = 2;
 int buzzerPin = 8;
 
-int velocity = 1000;
+int velocity = 2000;
 const int MAX_LEVEL = 50;
 int sequence[MAX_LEVEL];
 int your_sequence[MAX_LEVEL];
