@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28307.329
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "windows", "Project1\Project1.vcxproj", "{00F1ABA9-1A9D-4EB9-9DCE-818DD4833F1A}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "arduino", "..\..\..\..\Documents\Arduino\Simon\Simon.vcxproj", "{7B01D3B9-5A26-4335-8B0E-45152BCFCB64}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Simon", "Sketch1\Simon.vcxproj", "{7B01D3B9-5A26-4335-8B0E-45152BCFCB64}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

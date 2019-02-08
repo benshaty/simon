@@ -9,6 +9,7 @@ int yLedPin = 5;
 int bLedPin = 4;
 int easyLedPin = 2;
 int hardLedPin = 11;
+int superLedPin = 12;
 int buzzerPin = 8;
 
 int velocity = 1000;
@@ -16,13 +17,14 @@ const int MAX_LEVEL = 50;
 int sequence[MAX_LEVEL];
 int your_sequence[MAX_LEVEL];
 int level = 0;
-int tones[] = { 1900, 1700, 1600, 1500 };
+int tones[] = { 1800, 1700, 1600, 1500 };
 int flash = 0;
 int ledState = 0;
 int period = 200;
 unsigned long time_now = 0;
 int co = 0;
 int easy = 1;
+int super = 0;
 
 void setup()
 {
@@ -32,6 +34,7 @@ void setup()
 	pinMode(bLedPin, OUTPUT);
 	pinMode(easyLedPin, OUTPUT);
 	pinMode(hardLedPin, OUTPUT);
+	pinMode(superLedPin, OUTPUT);
 	pinMode(A0, INPUT);
 	pinMode(A1, INPUT);
 	pinMode(A2, INPUT);
@@ -41,6 +44,7 @@ void setup()
 	allPinsOff();
 	digitalWrite(easyLedPin, LOW);
 	digitalWrite(hardLedPin, LOW);
+	digitalWrite(superLedPin, LOW);
 	flash = 1;
 	lcd.begin();   // iInit the LCD for 16 chars 2 lines
 	lcd.backlight();   // Turn on the backligt (try lcd.noBaklight() to turn it off)
@@ -75,36 +79,66 @@ void loop()
 		lcd.setCursor(0, 0); //First line
 		lcd.print("Simon Game!");
 		lcd.setCursor(0, 1); //Second line
-		lcd.print("Press btn");
+		lcd.print("Select level :)");
 	}
 	if (ledState) {
 		digitalWrite(easyLedPin, HIGH);
 		digitalWrite(hardLedPin, HIGH);
+		digitalWrite(superLedPin, HIGH);
 	}
 	else {
 		digitalWrite(easyLedPin, LOW);
 		digitalWrite(hardLedPin, LOW);
+		digitalWrite(superLedPin, LOW);
 	}
 
 
-	if (level == 0)
-		generate_sequence();//generate a sequence;
 	if (!level) {
+		generate_sequence();//generate a sequence;
 		if (digitalRead(9) == LOW)
 		{
 			easy = 1;
 			flash = 0;
-			digitalWrite(easyLedPin, LOW);
+			super = 0;
+			digitalWrite(easyLedPin, HIGH);
 			digitalWrite(hardLedPin, LOW);
+			digitalWrite(superLedPin, LOW);
 			level = 1;
+			lcd.clear();
+			lcd.setCursor(0, 0); //First line
+			lcd.print("Simon Game!");
+			lcd.setCursor(0, 1); //Second line
+			lcd.print("Easy mode");
 		}
 		if (digitalRead(10) == LOW)
 		{
 			easy = 0;
 			flash = 0;
+			super = 0;
+			digitalWrite(easyLedPin, LOW);
+			digitalWrite(hardLedPin, HIGH);
+			digitalWrite(superLedPin, LOW);
+			level = 1;
+			lcd.clear();
+			lcd.setCursor(0, 0); //First line
+			lcd.print("Simon Game!");
+			lcd.setCursor(0, 1); //Second line
+			lcd.print("Hard mode");
+		}
+		if (digitalRead(13) == LOW)
+		{
+			easy = 0;
+			flash = 0;
+			super = 1;
 			digitalWrite(easyLedPin, LOW);
 			digitalWrite(hardLedPin, LOW);
+			digitalWrite(superLedPin, HIGH);
 			level = 1;
+			lcd.clear();
+			lcd.setCursor(0, 0); //First line
+			lcd.print("Simon Game!");
+			lcd.setCursor(0, 1); //Second line
+			lcd.print("Super mode");
 		}
 	}
 	
@@ -120,7 +154,7 @@ void show_sequence()
 
 	allPinsOff();
 	/* easy mode */
-	if (easy) {
+	if (easy && !super) {
 		for (int i = 0; i < level; i++)
 		{
 			digitalWrite(sequence[i], HIGH);
@@ -149,7 +183,10 @@ void get_sequence()
 		{
 			if (digitalRead(A0) == LOW)
 			{
-				tone(buzzerPin, tones[0], 50);
+				if (!super)
+				{
+					tone(buzzerPin, tones[0], 50);
+				}
 				digitalWrite(rLedPin, HIGH);
 				your_sequence[i] = rLedPin;
 				delay(200);
@@ -165,7 +202,10 @@ void get_sequence()
 
 			if (digitalRead(A1) == LOW)
 			{
-				tone(buzzerPin, tones[1], 50);
+				if (!super)
+				{
+					tone(buzzerPin, tones[1], 50);
+				}
 				digitalWrite(gLedPin, HIGH);
 				delay(200);
 				your_sequence[i] = gLedPin;
@@ -181,7 +221,10 @@ void get_sequence()
 
 			if (digitalRead(A2) == LOW)
 			{
-				tone(buzzerPin, tones[2], 50);
+				if (!super)
+				{
+					tone(buzzerPin, tones[2], 50);
+				}
 				digitalWrite(yLedPin, HIGH);
 				delay(200);
 				your_sequence[i] = yLedPin;
@@ -197,7 +240,10 @@ void get_sequence()
 
 			if (digitalRead(A3) == LOW)
 			{
-				tone(buzzerPin, tones[3], 50);
+				if (!super)
+				{
+					tone(buzzerPin, tones[3], 50);
+				}
 				digitalWrite(bLedPin, HIGH);
 				delay(200);
 				your_sequence[i] = bLedPin;
